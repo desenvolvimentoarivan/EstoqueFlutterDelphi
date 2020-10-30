@@ -1,4 +1,6 @@
+import 'package:estoque_flutter/Forms/WidgetMenu.dart';
 import 'package:estoque_flutter/componentes.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -69,20 +71,39 @@ class _WidgetLoginState extends State<WidgetLogin> {
 
       http.Response resposta;
 
-      print(url);
+      //print(url);
       try {
         resposta = await http.get(url);
         if (resposta.statusCode == 200) {
           if (resposta.body != 'erro') {
             _gravaArqIni();
-            print('login ok');
+            //print('login ok');
+            /* FlushbarHelper.createSuccess(
+              message: 'Seja bem-vindo ao sistema',
+              title: 'Bem Vindo ' + resposta.body,
+              duration: Duration(seconds: 2),
+            )..show(context);*/
+
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => WidgetMenu()));
           } else {
-            print('login errado');
+            //print('login errado');
+            FlushbarHelper.createError(
+              message: 'Usuário ou Senha inválidos',
+              title: 'Erro',
+              duration: Duration(seconds: 3),
+            )..show(context);
           }
         }
       } catch (error) {
-        print('erro ao conectar ao servidor' + error.toString());
+        print('erro ao conectar ao servidor ' + error.toString());
       }
+    } else {
+      FlushbarHelper.createInformation(
+        message: 'Preencha todos os campos',
+        title: 'Ops',
+        duration: Duration(seconds: 3),
+      )..show(context);
     }
   }
 

@@ -13,6 +13,7 @@ object RestDWForm: TRestDWForm
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  WindowState = wsMaximized
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow

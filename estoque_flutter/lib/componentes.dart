@@ -21,6 +21,11 @@ class Tedit extends StatelessWidget {
         fontStyle: FontStyle.italic,
       ),
       decoration: InputDecoration(
+        suffixIcon: IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              controle.clear();
+            }),
         labelText: label,
         fillColor: Colors.white,
         filled: true,

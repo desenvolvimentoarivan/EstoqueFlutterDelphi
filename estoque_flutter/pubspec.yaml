@@ -29,6 +29,10 @@ dependencies:
   cupertino_icons: ^1.0.0
   shared_preferences: ^0.5.12+2
   http: ^0.12.2
+  flushbar: ^1.10.4
+  fancy_bottom_navigation: ^0.3.2
+  flutter_icons: ^1.1.0
+  qrscan: ^0.2.17
 
 dev_dependencies:
   flutter_test:
