@@ -1,3 +1,5 @@
+import 'package:estoque_flutter/DataModule.dart';
+import 'package:estoque_flutter/Forms/WidgetProdutos.dart';
 import 'package:estoque_flutter/componentes.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
@@ -132,11 +134,55 @@ class _WidgetMenuState extends State<WidgetMenu> {
           ),
         );
       case 1:
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("Tela Categorias"),
-          ],
+        return Center(
+          child: FutureBuilder<List<Categorias>>(
+              future: fetchListCategorias(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Categorias> categoria = snapshot.data;
+
+                  return ListView(
+                    padding: EdgeInsets.all(15),
+                    children: categoria
+                        .map((categoria) => Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  splashColor: Colors.deepPurple,
+                                  color: Colors.blue,
+                                  onPressed: () {
+                                    idCategoria = '${categoria.codigo}';
+                                    nomeCategoria = '${categoria.nome}';
+                                    print(nomeCategoria);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                WidgetProdutos()));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 20),
+                                        child: Text(
+                                          '${categoria.nome}',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ))
+                        .toList(),
+                  );
+                }
+                return CircularProgressIndicator();
+              }),
         );
       default:
         return Center(

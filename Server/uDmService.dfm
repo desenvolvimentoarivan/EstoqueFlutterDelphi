@@ -659,6 +659,33 @@ object ServerMethodDM: TServerMethodDM
         EventName = 'Login'
         OnlyPreDefinedParams = False
         OnReplyEvent = DWServerEvents1EventsLoginReplyEvent
+      end
+      item
+        Routes = [crAll]
+        NeedAuthorization = True
+        DWParams = <>
+        JsonMode = jmPureJSON
+        Name = 'GetCategoria'
+        EventName = 'GetCategoria'
+        OnlyPreDefinedParams = False
+        OnReplyEvent = DWServerEvents1EventsGetCategoriaReplyEvent
+      end
+      item
+        Routes = [crAll]
+        NeedAuthorization = True
+        DWParams = <
+          item
+            TypeObject = toParam
+            ObjectDirection = odINOUT
+            ObjectValue = ovString
+            ParamName = 'pCategoria'
+            Encoded = True
+          end>
+        JsonMode = jmPureJSON
+        Name = 'getProdutoCat'
+        EventName = 'getProdutoCat'
+        OnlyPreDefinedParams = False
+        OnReplyEvent = DWServerEvents1EventsgetProdutoCatReplyEvent
       end>
     ContextName = 'eventos'
     Left = 48

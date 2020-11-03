@@ -107,6 +107,10 @@ TYPE
       var StatusCode: Integer);
     procedure DWServerEvents1EventsLoginReplyEvent(var Params: TDWParams;
       var Result: string);
+    procedure DWServerEvents1EventsGetCategoriaReplyEvent(var Params: TDWParams;
+      var Result: string);
+    procedure DWServerEvents1EventsgetProdutoCatReplyEvent(
+      var Params: TDWParams; var Result: string);
   PRIVATE
     { Private declarations }
     vIDVenda : Integer;
@@ -366,6 +370,31 @@ begin
  Params.ItemsString['result'].AsInteger := Random(Params.ItemsString['mynumber'].AsInteger);
 end;
 
+procedure TServerMethodDM.DWServerEvents1EventsGetCategoriaReplyEvent(
+  var Params: TDWParams; var Result: string);
+var JSONValue: TJSONValue;
+begin
+  JSONValue := TJSONValue.Create;
+
+  try
+    FDQuery3.Close;
+    FDQuery3.SQL.Clear;
+    FDQuery3.SQL.Text := 'select codigo, nome from categoria order by 2';
+    FDQuery3.Open;
+
+    if not FDQuery3.IsEmpty then
+    begin
+      JSONValue.LoadFromDataset('',FDQuery3,False,jmPureJSON);
+      Result := JSONValue.ToJSON;
+    end;
+    
+
+    
+  finally
+    JSONValue.Free;
+  end;
+end;
+
 procedure TServerMethodDM.DWServerEvents1EventsgetemployeeDWReplyEvent(
   var Params: TDWParams; var Result: string);
 begin
@@ -377,6 +406,32 @@ procedure TServerMethodDM.DWServerEvents1EventsgetemployeeReplyEvent(
 Begin
  employeeReplyEvent(Params, Params.JsonMode, Result);
 End;
+
+procedure TServerMethodDM.DWServerEvents1EventsgetProdutoCatReplyEvent(
+  var Params: TDWParams; var Result: string);
+var JSONValue: TJSONValue;
+begin
+  JSONValue := TJSONValue.Create;
+
+  try
+    FDQuery3.Close;
+    FDQuery3.SQL.Clear;
+    FDQuery3.SQL.Text := 'select * from produto where codcategoria = :cat order by 2';
+    FDQuery3.ParamByName('cat').AsInteger := Params.ItemsString['pCategoria'].AsInteger;
+    FDQuery3.Open;
+
+    if not FDQuery3.IsEmpty then
+    begin
+      JSONValue.LoadFromDataset('',FDQuery3,False,jmPureJSON);
+      Result := JSONValue.ToJSON;
+    end;
+    
+
+    
+  finally
+    JSONValue.Free;
+  end;
+end;
 
 procedure TServerMethodDM.DWServerEvents1EventshelloworldRDWReplyEvent(
   var Params: TDWParams; var Result: string);
