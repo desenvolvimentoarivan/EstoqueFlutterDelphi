@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'DataModule.dart';
+
 class Tedit extends StatelessWidget {
   final String label;
   final TextEditingController controle;
@@ -35,4 +37,40 @@ class Tedit extends StatelessWidget {
       ),
     );
   }
+}
+
+void alterarEstoque(BuildContext context) async {
+  TextEditingController controle = TextEditingController();
+  controle.text = qtdEstoque;
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Column(
+            children: [
+              Icon(
+                Icons.search,
+                color: Colors.blue[900],
+                size: 64,
+              ),
+              Text(nmeEstoque),
+            ],
+          ),
+          content: Tedit(
+            label: 'Estoque Atual',
+            teclado: TextInputType.number,
+            controle: controle,
+          ),
+          actions: [
+            FlatButton(
+              onPressed: () {
+                qtdEstoque = controle.text;
+                gravarEstoque();
+                Navigator.of(context).pop();
+              },
+              child: Text('Alterar'),
+            ),
+          ],
+        );
+      });
 }

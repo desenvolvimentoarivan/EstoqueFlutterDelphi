@@ -2,6 +2,7 @@ import 'package:estoque_flutter/DataModule.dart';
 import 'package:estoque_flutter/Forms/WidgetProdutos.dart';
 import 'package:estoque_flutter/componentes.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -32,6 +33,13 @@ class _WidgetMenuState extends State<WidgetMenu> {
 
       setState(() {
         _scan.text = reader;
+        if (_scan.text.isNotEmpty) {
+          nomeCategoria = 'Busca EAN = ' + _scan.text;
+          acao = 'codbarra = ' + "'" + _scan.text + "'";
+
+          Navigator.push(context,
+              CupertinoPageRoute(builder: (context) => WidgetProdutos()));
+        }
       });
     } on PlatformException catch (e) {
       if (e.code == scanner.CameraAccessDenied) {}
@@ -105,7 +113,15 @@ class _WidgetMenuState extends State<WidgetMenu> {
                         icon: Icon(
                           FontAwesome.search,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          nomeCategoria = 'Busca EAN = ' + _scan.text;
+                          acao = 'codbarra = ' + "'" + _scan.text + "'";
+
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => WidgetProdutos()));
+                        },
                         iconSize: 40,
                         color: Colors.blue,
                       ),
@@ -156,8 +172,10 @@ class _WidgetMenuState extends State<WidgetMenu> {
                                   onPressed: () {
                                     idCategoria = '${categoria.codigo}';
                                     nomeCategoria = '${categoria.nome}';
+                                    acao = 'codcategoria = ${categoria.codigo}';
                                     print(nomeCategoria);
-                                    Navigator.of(context).push(
+                                    Navigator.push(
+                                        context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 WidgetProdutos()));
@@ -218,7 +236,15 @@ class _WidgetMenuState extends State<WidgetMenu> {
                         icon: Icon(
                           FontAwesome.tags,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          nomeCategoria = _prod.text;
+                          acao = 'codigo =' + _prod.text;
+
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => WidgetProdutos()));
+                        },
                         iconSize: 40,
                         color: Colors.blue,
                       ),
@@ -232,7 +258,15 @@ class _WidgetMenuState extends State<WidgetMenu> {
                     children: [
                       IconButton(
                         icon: Icon(FontAwesome.font),
-                        onPressed: () {},
+                        onPressed: () {
+                          nomeCategoria = _prod.text;
+                          acao = 'nome like ' + "'" + _prod.text;
+                          print(acao);
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => WidgetProdutos()));
+                        },
                         iconSize: 40,
                         color: Colors.blue,
                       ),
@@ -246,7 +280,16 @@ class _WidgetMenuState extends State<WidgetMenu> {
                     children: [
                       IconButton(
                         icon: Icon(FontAwesome.barcode),
-                        onPressed: () {},
+                        onPressed: () {
+                          nomeCategoria = _prod.text;
+                          acao =
+                              'codbarra like ' + "'" + _prod.text + "%" + "'";
+
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => WidgetProdutos()));
+                        },
                         iconSize: 40,
                         color: Colors.blue,
                       ),

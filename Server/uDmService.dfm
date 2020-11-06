@@ -686,6 +686,40 @@ object ServerMethodDM: TServerMethodDM
         EventName = 'getProdutoCat'
         OnlyPreDefinedParams = False
         OnReplyEvent = DWServerEvents1EventsgetProdutoCatReplyEvent
+      end
+      item
+        Routes = [crAll]
+        NeedAuthorization = True
+        DWParams = <
+          item
+            TypeObject = toParam
+            ObjectDirection = odINOUT
+            ObjectValue = ovString
+            ParamName = 'pSelect'
+            Encoded = True
+          end>
+        JsonMode = jmPureJSON
+        Name = 'Gravar'
+        EventName = 'Gravar'
+        OnlyPreDefinedParams = False
+        OnReplyEvent = DWServerEvents1EventsGravarReplyEvent
+      end
+      item
+        Routes = [crAll]
+        NeedAuthorization = True
+        DWParams = <
+          item
+            TypeObject = toParam
+            ObjectDirection = odINOUT
+            ObjectValue = ovString
+            ParamName = 'pSelect'
+            Encoded = True
+          end>
+        JsonMode = jmPureJSON
+        Name = 'getProdutos'
+        EventName = 'getProduto'
+        OnlyPreDefinedParams = False
+        OnReplyEvent = DWServerEvents1EventsgetProdutosReplyEvent
       end>
     ContextName = 'eventos'
     Left = 48
