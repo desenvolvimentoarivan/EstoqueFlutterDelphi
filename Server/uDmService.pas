@@ -488,7 +488,7 @@ var
 begin
 
   s := Params.ItemsString['pSelect'].AsString;
-  //ShowMessage(s);
+  // ShowMessage(s);
   if (not s.IsEmpty) then
     with FDQuery3 do
     begin
